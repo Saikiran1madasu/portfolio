@@ -1,11 +1,11 @@
-import React from "react";
+"use client";
+
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 
-const MockupWireframe = React.memo(MockupWireframeComponent);
 
-function MockupWireframeComponent({
+function MockupWireframe({
     className,
     delay = 0,
     width = 400,
@@ -40,7 +40,7 @@ function MockupWireframeComponent({
                 ease: [0.23, 0.86, 0.39, 0.96],
                 opacity: { duration: 1.2 },
             }}
-            className={cn("absolute will-change-transform", className)}
+            className={cn("absolute", className)}
         >
             <motion.div
                 animate={{
@@ -216,68 +216,54 @@ function HeroGeometric({
         }),
     };
 
-    const [isReady, setIsReady] = React.useState(false);
-
-    React.useEffect(() => {
-        // Defer heavy animations until after initial paint
-        const timer = requestAnimationFrame(() => {
-            setIsReady(true);
-        });
-        return () => cancelAnimationFrame(timer);
-    }, []);
-
     return (
         <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#030303]">
             <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.05] via-transparent to-rose-500/[0.05] blur-3xl" />
 
             <div className="absolute inset-0 overflow-hidden">
-                {isReady && (
-                    <>
-                        {/* Desktop Wireframe - Main Dashboard */}
-                        <MockupWireframe
-                            delay={0.3}
-                            width="w-[80vw] md:w-[600px]"
-                            height="h-[50vw] md:h-[340px]"
-                            rotate={12}
-                            gradient="from-emerald-500/[0.15]"
-                            className="left-[-10%] md:left-[-5%] top-[10%] md:top-[20%] opacity-40 md:opacity-70"
-                            type="desktop"
-                        />
+                {/* Desktop Wireframe - Main Dashboard */}
+                <MockupWireframe
+                    delay={0.3}
+                    width="w-[80vw] md:w-[600px]"
+                    height="h-[50vw] md:h-[340px]"
+                    rotate={12}
+                    gradient="from-emerald-500/[0.15]"
+                    className="left-[-10%] md:left-[-5%] top-[10%] md:top-[20%] opacity-40 md:opacity-70"
+                    type="desktop"
+                />
 
-                        {/* Mobile Wireframe - Wallet App */}
-                        <MockupWireframe
-                            delay={0.5}
-                            width="w-[40vw] md:w-[200px]"
-                            height="h-[70vw] md:h-[400px]"
-                            rotate={-15}
-                            gradient="from-cyan-500/[0.3]" // Increased from 0.15
-                            className="right-[-10%] md:right-[0%] top-[60%] md:top-[75%] opacity-70 md:opacity-90" // Increased opacity
-                            type="mobile"
-                        />
+                {/* Mobile Wireframe - Wallet App */}
+                <MockupWireframe
+                    delay={0.5}
+                    width="w-[40vw] md:w-[200px]"
+                    height="h-[70vw] md:h-[400px]"
+                    rotate={-15}
+                    gradient="from-cyan-500/[0.3]" // Increased from 0.15
+                    className="right-[-10%] md:right-[0%] top-[60%] md:top-[75%] opacity-70 md:opacity-90" // Increased opacity
+                    type="mobile"
+                />
 
-                        {/* Desktop Wireframe - Analytics */}
-                        <MockupWireframe
-                            delay={0.4}
-                            width="w-[50vw] md:w-[300px]"
-                            height="h-[30vw] md:h-[200px]"
-                            rotate={-8}
-                            gradient="from-purple-500/[0.15]"
-                            className="left-[5%] md:left-[10%] bottom-[5%] md:bottom-[10%] opacity-40 md:opacity-70"
-                            type="desktop"
-                        />
+                {/* Desktop Wireframe - Analytics */}
+                <MockupWireframe
+                    delay={0.4}
+                    width="w-[50vw] md:w-[300px]"
+                    height="h-[30vw] md:h-[200px]"
+                    rotate={-8}
+                    gradient="from-purple-500/[0.15]"
+                    className="left-[5%] md:left-[10%] bottom-[5%] md:bottom-[10%] opacity-40 md:opacity-70"
+                    type="desktop"
+                />
 
-                        {/* Mobile Wireframe - Profile */}
-                        <MockupWireframe
-                            delay={0.6}
-                            width="w-[30vw] md:w-[180px]"
-                            height="h-[60vw] md:h-[360px]"
-                            rotate={20}
-                            gradient="from-orange-500/[0.15]"
-                            className="right-[20%] md:right-[20%] top-[5%] md:top-[15%] opacity-40 md:opacity-70"
-                            type="mobile"
-                        />
-                    </>
-                )}
+                {/* Mobile Wireframe - Profile */}
+                <MockupWireframe
+                    delay={0.6}
+                    width="w-[30vw] md:w-[180px]"
+                    height="h-[60vw] md:h-[360px]"
+                    rotate={20}
+                    gradient="from-orange-500/[0.15]"
+                    className="right-[20%] md:right-[20%] top-[5%] md:top-[15%] opacity-40 md:opacity-70"
+                    type="mobile"
+                />
             </div>
 
             <div className="relative z-10 container mx-auto px-4 md:px-6">

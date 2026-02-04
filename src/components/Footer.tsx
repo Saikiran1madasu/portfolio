@@ -1,6 +1,6 @@
 
 
-import footerNewBg from '../assets/footer_new_bg.webp';
+import footerNewBg from '../assets/footer_new_bg.png';
 
 const Footer = () => {
     return (
