@@ -3,18 +3,14 @@ import React, { useState, Suspense, lazy } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Preloader from './Preloader';
 import { HeroGeometric } from './components/ui/shape-landing-hero';
-import AboutSection2 from './components/AboutSection2';
-import ProjectsSection from './components/ProjectsSection';
-import SkillsSection from './components/SkillsSection';
-import CertificationsSection from './components/CertificationsSection';
-import './index.css';
-
-import FloatingDock from './components/FloatingDock';
-
-import TextSection from './components/TextSection';
-import Footer from './components/Footer';
-
-// Lazy load the heavy 3D gallery
+// Lazy load heavy sections
+const AboutSection2 = lazy(() => import('./components/AboutSection2'));
+const ProjectsSection = lazy(() => import('./components/ProjectsSection'));
+const SkillsSection = lazy(() => import('./components/SkillsSection'));
+const CertificationsSection = lazy(() => import('./components/CertificationsSection'));
+const TextSection = lazy(() => import('./components/TextSection'));
+const Footer = lazy(() => import('./components/Footer'));
+const FloatingDock = lazy(() => import('./components/FloatingDock'));
 const PersonalProjectsSection = lazy(() => import('./components/PersonalProjectsSection'));
 
 function App() {
@@ -38,18 +34,16 @@ function App() {
                                 title1="Madasu Sai Kiran"
                                 title2="UI/UX Designer"
                             />
-                            <AboutSection2 />
-                            <SkillsSection />
-                            <ProjectsSection />
-                            <Suspense fallback={<div className="h-[600px] w-full bg-[#0a0a0a]" />}>
+                            <Suspense fallback={<div className="min-h-screen bg-[#0a0a0a]" />}>
+                                <AboutSection2 />
+                                <SkillsSection />
+                                <ProjectsSection />
                                 <PersonalProjectsSection />
+                                <CertificationsSection />
+                                <TextSection />
+                                <Footer />
+                                <FloatingDock />
                             </Suspense>
-                            <CertificationsSection />
-                            <TextSection />
-
-                            <Footer />
-
-                            <FloatingDock />
                         </motion.div>
                     )}
                 </AnimatePresence>
