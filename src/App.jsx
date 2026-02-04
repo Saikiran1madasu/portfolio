@@ -1,5 +1,5 @@
 import { ReactLenis } from 'lenis/react';
-import React, { useState, Suspense, lazy } from 'react';
+import React, { useState, Suspense, lazy, useLayoutEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Preloader from './Preloader';
 import { HeroGeometric } from './components/ui/shape-landing-hero';
@@ -13,11 +13,31 @@ const Footer = lazy(() => import('./components/Footer'));
 const FloatingDock = lazy(() => import('./components/FloatingDock'));
 const PersonalProjectsSection = lazy(() => import('./components/PersonalProjectsSection'));
 
+// FadeInWrapper component for smooth section transitions
+const FadeInWrapper = ({ children }) => (
+    <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+    >
+        {children}
+    </motion.div>
+);
+
 function App() {
     const [loading, setLoading] = useState(true);
 
+    useLayoutEffect(() => {
+        // Force start at top to ensure proper animation triggering
+        if ('scrollRestoration' in window.history) {
+            window.history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
+    }, []);
+
     return (
-        <ReactLenis root>
+        <ReactLenis root options={{ lerp: 0.05, duration: 1.5, smoothWheel: true }}>
             <div className="app-container">
                 <AnimatePresence mode="wait">
                     {loading ? (
@@ -35,14 +55,16 @@ function App() {
                                 title2="UI/UX Designer"
                             />
                             <Suspense fallback={<div className="min-h-screen bg-[#0a0a0a]" />}>
-                                <AboutSection2 />
-                                <SkillsSection />
-                                <ProjectsSection />
-                                <PersonalProjectsSection />
-                                <CertificationsSection />
-                                <TextSection />
-                                <Footer />
-                                <FloatingDock />
+                                <FadeInWrapper><AboutSection2 /></FadeInWrapper>
+                                <FadeInWrapper><SkillsSection /></FadeInWrapper>
+                                <FadeInWrapper><ProjectsSection /></FadeInWrapper>
+                                <FadeInWrapper><PersonalProjectsSection /></FadeInWrapper>
+                                <FadeInWrapper><CertificationsSection /></FadeInWrapper>
+                                <FadeInWrapper><TextSection /></FadeInWrapper>
+                                <FadeInWrapper><Footer /></FadeInWrapper>
+                                <div className="hidden md:block">
+                                    <FloatingDock />
+                                </div>
                             </Suspense>
                         </motion.div>
                     )}

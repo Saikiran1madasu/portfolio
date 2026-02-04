@@ -1,3 +1,5 @@
+import { useRef } from 'react';
+import { useInView } from 'framer-motion';
 import CircularGallery from './ui/CircularGallery';
 import DecryptedText from './ui/DecryptedText';
 
@@ -8,8 +10,11 @@ import imgStyle from '../assets/personalproject/stylye.webp';
 import imgEdguru from '../assets/personalproject/edguru.webp';
 
 export default function PersonalProjectsSection() {
+    const sectionRef = useRef(null);
+    const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
+
     return (
-        <section className="bg-[#0a0a0a] min-h-[600px] md:min-h-[800px] py-10 relative overflow-hidden flex flex-col items-center justify-center">
+        <section ref={sectionRef} className="bg-[#0a0a0a] min-h-[600px] md:min-h-[800px] py-10 relative overflow-hidden flex flex-col items-center justify-center">
 
             {/* Header */}
             <div className="mb-10 text-center relative z-10 px-4">
@@ -33,18 +38,20 @@ export default function PersonalProjectsSection() {
 
             {/* Circular Gallery Container */}
             <div className="h-[500px] md:h-[600px] w-full relative">
-                <CircularGallery
-                    bend={1}
-                    textColor="#ffffff"
-                    borderRadius={0.05}
-                    items={[
-                        { image: imgRummy, text: 'Rummy' },
-                        { image: imgStream, text: 'Stream' },
-                        { image: imgWeather, text: 'Weather' },
-                        { image: imgStyle, text: 'Stylye' },
-                        { image: imgEdguru, text: 'EdGuru' }
-                    ]}
-                />
+                {isInView && (
+                    <CircularGallery
+                        bend={1}
+                        textColor="#ffffff"
+                        borderRadius={0.05}
+                        items={[
+                            { image: imgRummy, text: 'Rummy' },
+                            { image: imgStream, text: 'Stream' },
+                            { image: imgWeather, text: 'Weather' },
+                            { image: imgStyle, text: 'Stylye' },
+                            { image: imgEdguru, text: 'EdGuru' }
+                        ]}
+                    />
+                )}
             </div>
 
             {/* Hint removed as per user request */}
