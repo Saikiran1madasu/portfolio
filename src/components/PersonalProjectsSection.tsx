@@ -20,7 +20,7 @@ export default function PersonalProjectsSection() {
                     <span className="mr-3">Personal</span>
                     <DecryptedText
                         text="Gallery"
-                        speed={100}
+                        speed={40}
                         className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400"
                         parentClassName="inline-block"
                         animateOn="view"

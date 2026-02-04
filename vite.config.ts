@@ -5,11 +5,21 @@ import path from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "/portfolio2.1/",
+  base: "/portfolio/",
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+    },
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'framer-motion'],
+          utils: ['clsx', 'tailwind-merge']
+        },
+      },
     },
   },
 });
