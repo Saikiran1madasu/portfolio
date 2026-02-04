@@ -51,7 +51,7 @@ export default function ProjectsSection() {
                             <div className="inline-flex flex-wrap justify-center gap-x-4">
                                 <DecryptedText
                                     text="Measurable"
-                                    speed={40}
+                                    speed={100}
                                     maxIterations={15}
                                     className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400"
                                     parentClassName="inline-block"
@@ -59,7 +59,7 @@ export default function ProjectsSection() {
                                 />
                                 <DecryptedText
                                     text="Impact"
-                                    speed={40}
+                                    speed={100}
                                     maxIterations={15}
                                     className="text-purple-300"
                                     parentClassName="inline-block"
