@@ -1,0 +1,171 @@
+@import "tailwindcss";
+
+@theme {
+    --font-sans: 'Outfit', sans-serif;
+    --font-cursive: 'Dancing Script', cursive;
+}
+
+:root {
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    font-weight: 400;
+    color-scheme: dark;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #000000;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    margin: 0;
+    display: flex;
+    place-items: center;
+    min-width: 320px;
+    min-height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+}
+
+#root {
+    width: 100%;
+}
+
+/* Preloader specific styles re-integrated */
+.preloader-container {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    width: 100vw;
+    height: 100vh;
+}
+
+.preloader-content-stacked {
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    aspect-ratio: 2/1;
+    /* Roughly 800x400 viewbox ratio */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.preloader-svg-stacked {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.preloader-text-line1 {
+    font-family: var(--font-cursive);
+    font-size: 80px;
+    user-select: none;
+    letter-spacing: 1px;
+}
+
+.preloader-text-line2 {
+    font-family: var(--font-cursive);
+    font-size: 100px;
+    user-select: none;
+    letter-spacing: 1px;
+}
+
+.preloader-underline {
+    fill: none;
+    stroke: white;
+    stroke-width: 4px;
+    stroke-linecap: round;
+}
+
+/* Emoji Styles - Positioned Dynamically via JS */
+.preloader-emoji-dynamic {
+    /* No default top/left here, JS handles it. */
+    font-size: 60px;
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+    pointer-events: none;
+    /* Prevent interference */
+    z-index: 60;
+    /* Transform for rotation and vertical centering adjustment relative to point */
+    transform: translateY(-55%) rotate(-10deg);
+    display: inline-block;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .preloader-text-line1 {
+        font-size: 60px;
+    }
+
+    .preloader-text-line2 {
+        font-size: 80px;
+    }
+
+    .preloader-emoji-dynamic {
+        font-size: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .preloader-emoji-dynamic {
+        font-size: 30px;
+    }
+}
+
+/* App Styles */
+.app-container {
+    min-height: 100vh;
+    width: 100%;
+    background-color: black;
+    color: white;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Custom Footer Hover Effect */
+/* Custom Footer Hover Effect */
+.text-outline-hover:hover {
+    text-shadow:
+        /* Layer 1: Black */
+        rgb(0, 0, 0) 1px 1px 0px,
+        rgb(0, 0, 0) 2px 2px 0px,
+        /* Layer 2: White */
+        rgb(255, 255, 255) 3px 3px 0px,
+        rgb(255, 255, 255) 4px 4px 0px,
+        /* Layer 3: Black */
+        rgb(0, 0, 0) 5px 5px 0px,
+        rgb(0, 0, 0) 6px 6px 0px,
+        /* Layer 4: White */
+        rgb(255, 255, 255) 7px 7px 0px,
+        rgb(255, 255, 255) 8px 8px 0px;
+    /* -webkit-text-stroke: 2px rgb(255, 255, 255); Removed as per request */
+    color: transparent;
+    /* Or keep black? User didn't specify color change. But distinct "shadow" usually implies we see the layers. If text is transparent, we see stroke + shadows. If text is black, we see Black face + White Stroke + Shadows. Let's keep transparent for the "Outline" style which is cool. */
+}
+
+/* Premium Background Animation */
+@keyframes slow-pan {
+    0% {
+        transform: scale(1.1) translate(0%, 0%);
+    }
+
+    50% {
+        transform: scale(1.1) translate(-1%, -1%);
+    }
+
+    100% {
+        transform: scale(1.1) translate(0%, 0%);
+    }
+}
+
+.animate-slow-pan {
+    animation: slow-pan 20s ease-in-out infinite;
+}
