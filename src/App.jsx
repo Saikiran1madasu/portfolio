@@ -62,9 +62,7 @@ function App() {
                                 <FadeInWrapper><CertificationsSection /></FadeInWrapper>
                                 <FadeInWrapper><TextSection /></FadeInWrapper>
                                 <FadeInWrapper><Footer /></FadeInWrapper>
-                                <div className="hidden md:block">
-                                    <FloatingDock />
-                                </div>
+                                <FloatingDock />
                             </Suspense>
                         </motion.div>
                     )}
