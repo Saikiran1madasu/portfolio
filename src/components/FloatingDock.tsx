@@ -32,7 +32,7 @@ export default function FloatingDock() {
     };
 
     return (
-        <div className="fixed bottom-8 right-6 z-50 flex flex-col items-end gap-4">
+        <div className="fixed bottom-4 right-4 md:bottom-8 md:right-6 z-50 flex flex-col items-end gap-4">
 
             {/* Contact Options (Raise Up) */}
             <AnimatePresence>
