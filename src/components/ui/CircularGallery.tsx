@@ -105,6 +105,7 @@ class Media {
         scene,
         screen,
         text,
+        link,
         viewport,
         bend,
         textColor,
@@ -121,6 +122,7 @@ class Media {
         this.scene = scene;
         this.screen = screen;
         this.text = text;
+        this.link = link;
         this.viewport = viewport;
         this.bend = bend;
         this.textColor = textColor;
@@ -305,7 +307,8 @@ class App {
             borderRadius = 0,
             font = 'bold 30px Figtree',
             scrollSpeed = 2,
-            scrollEase = 0.05
+            scrollEase = 0.05,
+            onItemClick
         } = {}
     ) {
         document.documentElement.classList.remove('no-js');
@@ -313,6 +316,7 @@ class App {
         this.scrollSpeed = scrollSpeed;
         this.scroll = { ease: scrollEase, current: 0, target: 0, last: 0 };
         this.onCheckDebounce = debounce(this.onCheck, 200);
+        this.onItemClick = onItemClick;
         this.createRenderer();
         this.createCamera();
         this.createScene();
@@ -374,6 +378,7 @@ class App {
                 scene: this.scene,
                 screen: this.screen,
                 text: data.text,
+                link: data.link,
                 viewport: this.viewport,
                 bend,
                 textColor,
@@ -386,16 +391,55 @@ class App {
         this.isDown = true;
         this.scroll.position = this.scroll.current;
         this.start = e.touches ? e.touches[0].clientX : e.clientX;
+        this.startY = e.touches ? e.touches[0].clientY : e.clientY;
+        this.hasDragged = false;
     }
     onTouchMove(e) {
         if (!this.isDown) return;
         const x = e.touches ? e.touches[0].clientX : e.clientX;
         const distance = (this.start - x) * (this.scrollSpeed * 0.025);
+        if (Math.abs(this.start - x) > 5) {
+            this.hasDragged = true;
+        }
         this.scroll.target = this.scroll.position + distance;
     }
-    onTouchUp() {
+    onTouchUp(e) {
+        if (!this.hasDragged && this.onItemClick) {
+            const clientX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+            const clientY = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
+            this.handleClick(clientX, clientY);
+        }
         this.isDown = false;
         this.onCheck();
+    }
+    handleClick(clientX, clientY) {
+        if (!this.medias || !this.camera || !this.renderer) return;
+        const rect = this.renderer.gl.canvas.getBoundingClientRect();
+        const ndcX = ((clientX - rect.left) / rect.width) * 2 - 1;
+        const ndcY = -((clientY - rect.top) / rect.height) * 2 + 1;
+        const fov = (this.camera.fov * Math.PI) / 180;
+        const halfH = Math.tan(fov / 2) * this.camera.position.z;
+        const halfW = halfH * this.camera.aspect;
+        const worldX = ndcX * halfW;
+        const worldY = ndcY * halfH;
+        let closestMedia = null;
+        let closestDist = Infinity;
+        for (const media of this.medias) {
+            const px = media.plane.position.x;
+            const py = media.plane.position.y;
+            const hw = media.plane.scale.x / 2;
+            const hh = media.plane.scale.y / 2;
+            if (worldX >= px - hw && worldX <= px + hw && worldY >= py - hh && worldY <= py + hh) {
+                const dist = Math.abs(worldX - px);
+                if (dist < closestDist) {
+                    closestDist = dist;
+                    closestMedia = media;
+                }
+            }
+        }
+        if (closestMedia && closestMedia.link) {
+            this.onItemClick(closestMedia.link);
+        }
     }
     onWheel(e) {
         const delta = e.deltaY || e.wheelDelta || e.detail;
@@ -476,14 +520,15 @@ export default function CircularGallery({
     borderRadius = 0.05,
     font = 'bold 30px Figtree',
     scrollSpeed = 2,
-    scrollEase = 0.05
+    scrollEase = 0.05,
+    onItemClick
 }) {
     const containerRef = useRef(null);
     useEffect(() => {
-        const app = new App(containerRef.current, { items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase });
+        const app = new App(containerRef.current, { items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase, onItemClick });
         return () => {
             app.destroy();
         };
-    }, [items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase]);
-    return <div className="circular-gallery" ref={containerRef} />;
+    }, [items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase, onItemClick]);
+    return <div className="circular-gallery" ref={containerRef} data-lenis-prevent style={{ cursor: onItemClick ? 'pointer' : 'grab' }} />;
 }
