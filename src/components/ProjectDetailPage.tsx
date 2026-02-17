@@ -210,7 +210,7 @@ export default function ProjectDetailPage() {
 
     const scaleIn = {
         hidden: { opacity: 0, scale: 0.6 },
-        visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: [0.34, 1.56, 0.64, 1] } },
+        visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: [0.34, 1.56, 0.64, 1] as const } },
     };
 
     const iconSize = { sm: 48, md: 60, lg: 72 };
