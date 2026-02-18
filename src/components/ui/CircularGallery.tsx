@@ -530,5 +530,5 @@ export default function CircularGallery({
             app.destroy();
         };
     }, [items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase, onItemClick]);
-    return <div className="circular-gallery" ref={containerRef} data-lenis-prevent style={{ cursor: onItemClick ? 'pointer' : 'grab' }} />;
+    return <div className="circular-gallery" ref={containerRef} style={{ cursor: onItemClick ? 'pointer' : 'grab' }} />;
 }
