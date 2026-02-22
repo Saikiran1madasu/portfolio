@@ -14,6 +14,13 @@ export interface DisplayCardProps {
     titleClassName?: string;
 }
 
+// Maps card index to the same translate the desktop hover applies
+const activeTranslates = [
+    "!-translate-y-10",  // card 0: same as hover:-translate-y-10
+    "!-translate-y-1",   // card 1: same as hover:-translate-y-1
+    "!translate-y-10",   // card 2: same as hover:translate-y-10
+];
+
 function DisplayCard({
     className,
     icon = <Sparkles className="size-4 text-blue-300" />,
@@ -22,14 +29,15 @@ function DisplayCard({
     date = "Just now",
     titleClassName = "text-blue-500",
     isActive = false,
+    activeTranslate = "",
     onTap,
-}: DisplayCardProps & { isActive?: boolean; onTap?: () => void }) {
+}: DisplayCardProps & { isActive?: boolean; activeTranslate?: string; onTap?: () => void }) {
     return (
         <div
             onClick={onTap}
             className={cn(
                 "relative flex h-36 w-[18rem] md:w-[22rem] -skew-y-[8deg] select-none flex-col justify-between rounded-xl border-2 bg-muted/70 backdrop-blur-sm px-4 py-3 transition-all duration-700 after:absolute after:-right-1 after:top-[-5%] after:h-[110%] after:w-[20rem] after:bg-gradient-to-l after:from-background after:to-transparent after:content-[''] hover:border-white/20 hover:bg-muted [&>*]:flex [&>*]:items-center [&>*]:gap-2 cursor-pointer",
-                isActive && "border-white/20 bg-muted before:!opacity-0 !grayscale-0",
+                isActive && `border-white/20 bg-muted before:!opacity-0 !grayscale-0 ${activeTranslate}`,
                 className
             )}
         >
@@ -76,6 +84,7 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
                     key={index}
                     {...cardProps}
                     isActive={tappedIndex === index}
+                    activeTranslate={activeTranslates[index] || ""}
                     onTap={() => handleTap(index)}
                 />
             ))}
