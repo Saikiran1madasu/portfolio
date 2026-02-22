@@ -153,8 +153,8 @@ export default function ProjectDetailPage() {
         const ctx = gsap.context(() => {
             gsap.fromTo(
                 imageRef.current,
-                { y: 40, opacity: 0, scale: 0.95 },
-                { y: 0, opacity: 1, scale: 1, duration: 1.4, delay: 0.8, ease: 'power4.out' }
+                { y: 15, opacity: 0, scale: 0.98 },
+                { y: 0, opacity: 1, scale: 1, duration: 1.2, delay: 0.8, ease: 'power4.out' }
             );
 
             gsap.fromTo(
@@ -163,11 +163,6 @@ export default function ProjectDetailPage() {
                 { scale: 1, duration: 1.6, delay: 0.9, ease: 'power3.out' }
             );
 
-            gsap.to('.project-image-wrapper', {
-                scrollTrigger: { trigger: '.project-image-wrapper', start: 'top 80%', end: 'bottom 20%', scrub: 1 },
-                y: -15,
-                ease: 'none',
-            });
 
             gsap.fromTo(
                 '.image-glow',
@@ -364,7 +359,7 @@ export default function ProjectDetailPage() {
             </motion.section>
 
             {/* ========== PROJECT IMAGE SECTION ========== */}
-            <section className="relative px-4 md:px-8 lg:px-12 pb-24">
+            <section className="relative px-4 md:px-8 lg:px-12 pb-24 -mt-8">
                 <HorizontalLine delay={1} />
 
                 <div ref={imageRef} className="project-image-wrapper relative max-w-6xl mx-auto" style={{ opacity: 0 }}>
