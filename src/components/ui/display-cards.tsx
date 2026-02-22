@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { Sparkles } from "lucide-react";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 export interface DisplayCardProps {
     className?: string;
@@ -71,19 +71,42 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
     ];
 
     const displayCards = cards || defaultCards;
-    const [tappedIndex, setTappedIndex] = useState(-1);
+    const [activeIndex, setActiveIndex] = useState(-1);
+    const [isPaused, setIsPaused] = useState(false);
 
+    // Auto cycle cards one by one, infinitely
+    useEffect(() => {
+        if (isPaused) return;
+
+        const interval = setInterval(() => {
+            setActiveIndex((prev) => {
+                const next = prev + 1;
+                return next >= displayCards.length ? 0 : next;
+            });
+        }, 2500);
+
+        return () => clearInterval(interval);
+    }, [displayCards.length, isPaused]);
+
+    // Handle manual tap/click
     const handleTap = useCallback((index: number) => {
-        setTappedIndex((prev) => (prev === index ? -1 : index));
+        setActiveIndex((prev) => (prev === index ? -1 : index));
+        setIsPaused(true);
+        // Resume auto-cycle after 4 seconds
+        setTimeout(() => setIsPaused(false), 4000);
     }, []);
 
     return (
-        <div className="grid [grid-template-areas:'stack'] place-items-center opacity-100 animate-in fade-in-0 duration-700">
+        <div
+            className="grid [grid-template-areas:'stack'] place-items-center opacity-100 animate-in fade-in-0 duration-700"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+        >
             {displayCards.map((cardProps, index) => (
                 <DisplayCard
                     key={index}
                     {...cardProps}
-                    isActive={tappedIndex === index}
+                    isActive={activeIndex === index}
                     activeTranslate={activeTranslates[index] || ""}
                     onTap={() => handleTap(index)}
                 />
