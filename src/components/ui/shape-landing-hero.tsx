@@ -230,6 +230,18 @@ function HeroGeometric({
         <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#030303]">
             <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.05] via-transparent to-rose-500/[0.05] blur-3xl" />
 
+            {/* Dot Grid Pattern */}
+            <div className="absolute inset-0 pointer-events-none z-[1]" style={{ contain: 'strict' }}>
+                <div
+                    className="absolute inset-0"
+                    style={{
+                        backgroundImage: `radial-gradient(circle, rgba(255,255,255,0.4) 1px, transparent 1px)`,
+                        backgroundSize: '32px 32px',
+                        opacity: 0.15,
+                    }}
+                />
+            </div>
+
             <div className="absolute inset-0 overflow-hidden">
                 {isReady && (
                     <>

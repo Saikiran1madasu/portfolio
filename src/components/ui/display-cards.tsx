@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { Sparkles } from "lucide-react";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 
 export interface DisplayCardProps {
     className?: string;
@@ -61,46 +61,20 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
     ];
 
     const displayCards = cards || defaultCards;
-    const [activeIndex, setActiveIndex] = useState(-1);
     const [tappedIndex, setTappedIndex] = useState(-1);
-    const [isPaused, setIsPaused] = useState(false);
 
-    // Auto popup: cycle cards one by one with delay
-    useEffect(() => {
-        if (isPaused) return;
-
-        const interval = setInterval(() => {
-            setActiveIndex((prev) => {
-                const next = prev + 1;
-                return next >= displayCards.length ? 0 : next;
-            });
-        }, 2000); // 2 second delay between each card
-
-        return () => clearInterval(interval);
-    }, [displayCards.length, isPaused]);
-
-    // Handle mobile tap
+    // Toggle card on tap/click
     const handleTap = useCallback((index: number) => {
         setTappedIndex((prev) => (prev === index ? -1 : index));
-        setIsPaused(true);
-        // Resume auto-popup after 5 seconds of no interaction
-        setTimeout(() => {
-            setIsPaused(false);
-            setTappedIndex(-1);
-        }, 5000);
     }, []);
 
     return (
-        <div
-            className="grid [grid-template-areas:'stack'] place-items-center opacity-100 animate-in fade-in-0 duration-700"
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => { setIsPaused(false); setTappedIndex(-1); }}
-        >
+        <div className="grid [grid-template-areas:'stack'] place-items-center opacity-100 animate-in fade-in-0 duration-700">
             {displayCards.map((cardProps, index) => (
                 <div key={index} onClick={() => handleTap(index)} className="cursor-pointer">
                     <DisplayCard
                         {...cardProps}
-                        isActive={tappedIndex === index || (!isPaused && activeIndex === index)}
+                        isActive={tappedIndex === index}
                     />
                 </div>
             ))}
