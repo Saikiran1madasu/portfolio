@@ -46,7 +46,7 @@ export default function ProjectsSection() {
                     </div>
 
                     <div className="max-w-4xl mx-auto text-center">
-                        <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-white mb-6">
+                        <h2 className="text-3xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-white mb-6">
                             <span className="block">Delivering</span>
                             <div className="inline-flex flex-wrap justify-center gap-x-4">
                                 <DecryptedText
