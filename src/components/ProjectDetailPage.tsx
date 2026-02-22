@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
-import { ArrowLeft, Pen, Layers, Palette, Grid3x3, Sparkles, Monitor, Smartphone, MousePointer2, Figma, Code } from 'lucide-react';
+import { ArrowLeft, Pen, Layers, Palette, Grid3x3, Sparkles, Figma } from 'lucide-react';
 import { useEffect, useRef, useLayoutEffect, useState, useCallback } from 'react';
 import { useLenis } from 'lenis/react';
 import gsap from 'gsap';
@@ -78,20 +78,6 @@ function GrainOverlay() {
     );
 }
 
-function DotPattern() {
-    return (
-        <div className="fixed inset-0 pointer-events-none z-[1]">
-            <div
-                className="absolute inset-0"
-                style={{
-                    backgroundImage: `radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1px)`,
-                    backgroundSize: '30px 30px',
-                    opacity: 0.3,
-                }}
-            />
-        </div>
-    );
-}
 
 function HorizontalLine({ delay = 0 }: { delay?: number }) {
     return (
@@ -213,7 +199,6 @@ export default function ProjectDetailPage() {
     return (
         <div ref={pageRef} className="min-h-screen bg-[#0a0a0a] overflow-x-hidden">
             <GrainOverlay />
-            <DotPattern />
 
             {/* Fixed Back Button */}
             <motion.button
@@ -246,19 +231,15 @@ export default function ProjectDetailPage() {
                 />
 
                 {/* Floating glassmorphic icons with mouse interaction */}
-                <div className="absolute inset-0 overflow-hidden">
+                <div className="absolute inset-0 overflow-hidden hidden md:block">
                     {isReady && (
                         <>
                             <FloatingIcon icon={<Pen size={22} />} x="8%" y="15%" size={iconSize.md} delay={0.3} rotate={12} depth={0.8} color={project.color} mouseX={mouseX} mouseY={mouseY} floatDuration={10} />
                             <FloatingIcon icon={<Layers size={28} />} x="85%" y="20%" size={iconSize.lg} delay={0.5} rotate={-8} depth={1} color={project.color} mouseX={mouseX} mouseY={mouseY} floatDuration={14} />
                             <FloatingIcon icon={<Palette size={20} />} x="12%" y="70%" size={iconSize.sm} delay={0.7} rotate={20} depth={0.5} color={project.color} mouseX={mouseX} mouseY={mouseY} floatDuration={11} />
                             <FloatingIcon icon={<Grid3x3 size={24} />} x="78%" y="65%" size={iconSize.md} delay={0.4} rotate={-15} depth={0.7} color={project.color} mouseX={mouseX} mouseY={mouseY} floatDuration={13} />
-                            <FloatingIcon icon={<Sparkles size={18} />} x="25%" y="80%" size={iconSize.sm} delay={0.9} rotate={8} depth={0.4} color={project.color} mouseX={mouseX} mouseY={mouseY} floatDuration={9} />
-                            <FloatingIcon icon={<Monitor size={26} />} x="70%" y="10%" size={iconSize.md} delay={0.6} rotate={-12} depth={0.9} color={project.color} mouseX={mouseX} mouseY={mouseY} floatDuration={12} />
-                            <FloatingIcon icon={<Smartphone size={20} />} x="5%" y="45%" size={iconSize.sm} delay={0.8} rotate={15} depth={0.6} color={project.color} mouseX={mouseX} mouseY={mouseY} floatDuration={10} />
-                            <FloatingIcon icon={<MousePointer2 size={22} />} x="90%" y="45%" size={iconSize.sm} delay={1.0} rotate={-20} depth={0.5} color={project.color} mouseX={mouseX} mouseY={mouseY} floatDuration={11} />
                             <FloatingIcon icon={<Figma size={24} />} x="40%" y="5%" size={iconSize.md} delay={0.35} rotate={6} depth={0.8} color={project.color} mouseX={mouseX} mouseY={mouseY} floatDuration={13} />
-                            <FloatingIcon icon={<Code size={18} />} x="60%" y="85%" size={iconSize.sm} delay={1.1} rotate={-10} depth={0.4} color={project.color} mouseX={mouseX} mouseY={mouseY} floatDuration={9} />
+                            <FloatingIcon icon={<Sparkles size={18} />} x="25%" y="80%" size={iconSize.sm} delay={0.9} rotate={8} depth={0.4} color={project.color} mouseX={mouseX} mouseY={mouseY} floatDuration={9} />
                         </>
                     )}
                 </div>

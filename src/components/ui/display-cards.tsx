@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { Sparkles } from "lucide-react";
+import { useState, useEffect, useCallback } from "react";
 
 export interface DisplayCardProps {
     className?: string;
@@ -20,11 +21,13 @@ function DisplayCard({
     description = "Discover amazing content",
     date = "Just now",
     titleClassName = "text-blue-500",
-}: DisplayCardProps) {
+    isActive = false,
+}: DisplayCardProps & { isActive?: boolean }) {
     return (
         <div
             className={cn(
                 "relative flex h-36 w-[18rem] md:w-[22rem] -skew-y-[8deg] select-none flex-col justify-between rounded-xl border-2 bg-muted/70 backdrop-blur-sm px-4 py-3 transition-all duration-700 after:absolute after:-right-1 after:top-[-5%] after:h-[110%] after:w-[20rem] after:bg-gradient-to-l after:from-background after:to-transparent after:content-[''] hover:border-white/20 hover:bg-muted [&>*]:flex [&>*]:items-center [&>*]:gap-2",
+                isActive && "border-white/20 bg-muted !-translate-y-10 before:!opacity-0 !grayscale-0",
                 className
             )}
         >
@@ -58,11 +61,48 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
     ];
 
     const displayCards = cards || defaultCards;
+    const [activeIndex, setActiveIndex] = useState(-1);
+    const [tappedIndex, setTappedIndex] = useState(-1);
+    const [isPaused, setIsPaused] = useState(false);
+
+    // Auto popup: cycle cards one by one with delay
+    useEffect(() => {
+        if (isPaused) return;
+
+        const interval = setInterval(() => {
+            setActiveIndex((prev) => {
+                const next = prev + 1;
+                return next >= displayCards.length ? 0 : next;
+            });
+        }, 2000); // 2 second delay between each card
+
+        return () => clearInterval(interval);
+    }, [displayCards.length, isPaused]);
+
+    // Handle mobile tap
+    const handleTap = useCallback((index: number) => {
+        setTappedIndex((prev) => (prev === index ? -1 : index));
+        setIsPaused(true);
+        // Resume auto-popup after 5 seconds of no interaction
+        setTimeout(() => {
+            setIsPaused(false);
+            setTappedIndex(-1);
+        }, 5000);
+    }, []);
 
     return (
-        <div className="grid [grid-template-areas:'stack'] place-items-center opacity-100 animate-in fade-in-0 duration-700">
+        <div
+            className="grid [grid-template-areas:'stack'] place-items-center opacity-100 animate-in fade-in-0 duration-700"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => { setIsPaused(false); setTappedIndex(-1); }}
+        >
             {displayCards.map((cardProps, index) => (
-                <DisplayCard key={index} {...cardProps} />
+                <div key={index} onClick={() => handleTap(index)} className="cursor-pointer">
+                    <DisplayCard
+                        {...cardProps}
+                        isActive={tappedIndex === index || (!isPaused && activeIndex === index)}
+                    />
+                </div>
             ))}
         </div>
     );

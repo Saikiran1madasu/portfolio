@@ -100,11 +100,10 @@ function SkillCard({ skill }: { skill: typeof skills[0] }) {
     return (
         <motion.div
             ref={cardRef}
-            initial={{ opacity: 0, y: 0 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="group relative p-6 md:p-10 rounded-2xl bg-white/5 backdrop-blur-md border border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.15)] overflow-hidden transition-all duration-500"
-            whileHover={{ y: -5 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="group relative p-6 md:p-10 rounded-2xl bg-white/5 backdrop-blur-md border border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.15)] overflow-hidden"
         >
             <h3 className="text-2xl font-bold text-white mb-4">{skill.title}</h3>
             <p className="text-base text-neutral-300 leading-relaxed">
