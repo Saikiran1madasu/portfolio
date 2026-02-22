@@ -153,7 +153,7 @@ export default function ProjectDetailPage() {
         const ctx = gsap.context(() => {
             gsap.fromTo(
                 imageRef.current,
-                { y: 80, opacity: 0, scale: 0.92 },
+                { y: 40, opacity: 0, scale: 0.95 },
                 { y: 0, opacity: 1, scale: 1, duration: 1.4, delay: 0.8, ease: 'power4.out' }
             );
 
@@ -165,7 +165,7 @@ export default function ProjectDetailPage() {
 
             gsap.to('.project-image-wrapper', {
                 scrollTrigger: { trigger: '.project-image-wrapper', start: 'top 80%', end: 'bottom 20%', scrub: 1 },
-                y: -30,
+                y: -15,
                 ease: 'none',
             });
 
@@ -395,7 +395,7 @@ export default function ProjectDetailPage() {
 
                         <div className="overflow-hidden">
                             <div className="project-image-inner">
-                                <img src={project.detailImage} alt={project.title} className="w-full h-auto object-contain bg-[#080808]" />
+                                <img src={project.detailImage} alt={project.title} loading="lazy" className="w-full h-auto object-contain bg-[#080808]" />
                             </div>
                         </div>
                     </div>
