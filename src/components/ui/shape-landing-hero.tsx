@@ -231,7 +231,7 @@ function HeroGeometric({
             <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.05] via-transparent to-rose-500/[0.05] blur-3xl" />
 
             {/* Grid Line Pattern */}
-            <div className="absolute inset-0 pointer-events-none z-[0]" style={{ contain: 'strict' }}>
+            <div className="absolute inset-0 pointer-events-none z-[1]" style={{ contain: 'strict' }}>
                 <div
                     className="absolute inset-0"
                     style={{
@@ -242,7 +242,7 @@ function HeroGeometric({
                 />
             </div>
 
-            <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute inset-0 overflow-hidden z-[2]">
                 {isReady && (
                     <>
                         {/* Desktop Wireframe - Main Dashboard */}
