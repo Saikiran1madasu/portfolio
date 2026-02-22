@@ -13,7 +13,7 @@ const Footer = () => {
 
             <div className="relative z-10 flex flex-col items-center gap-6">
                 <h3 className="text-black/70 text-base md:text-lg font-semibold tracking-wide">
-                    Open to new challenges and growth.
+                    Have a project in mind?
                 </h3>
 
                 <a
@@ -21,7 +21,7 @@ const Footer = () => {
                     className="text-[5rem] md:text-[10rem] lg:text-[13rem] font-bold text-black uppercase tracking-[1px] leading-none transition-all duration-300 text-outline-hover cursor-pointer text-center"
                     aria-label="Send email to saikiran123.madasu@gmail.com"
                 >
-                    LET'S START?
+                    LET'S BUILD.
                 </a>
 
                 <p className="text-black/40 text-sm font-medium">
