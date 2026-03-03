@@ -25,7 +25,7 @@ const Footer = () => {
                 </a>
 
                 <p className="text-black/40 text-sm font-medium">
-                    © Madasu Sai Kiran
+                    © 2026 Madasu Sai Kiran. All rights reserved.
                 </p>
             </div>
         </div>
