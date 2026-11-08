@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FileText, MessageCircle, Mail, Send, Linkedin, X } from "lucide-react";
-import resumePdf from "../assets/uiux_resume.pdf";
+import resumePdf from "../assets/Madasu_Sai_Kiran_Resume.pdf";
 
 export default function FloatingDock() {
     const [isContactOpen, setIsContactOpen] = useState(false);
